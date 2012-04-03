@@ -60,8 +60,12 @@ class GenomicMap:
     self.mappings[interval_a]=interval_b
     return self
 
-def estimate_large_indels(reseq_contigs_file,mappings_file):
-  
+def infer_genomic_event(src1,dst1,src2,dst2):
+  #Determines genomic event based on "contiguous" sets of 
+  # mappings between denovo assembly and reference genome
+
+def infer_genomic_events(reseq_contigs_file,mappings_file):
+  #Gets the resequencing contigs and reads mappings to reference
   sizes = {}
   f_reseq=open(reseq_contigs_file,"rU")
   for record in SeqIO.parse(f_reseq, "fasta") :
@@ -84,10 +88,13 @@ def estimate_large_indels(reseq_contigs_file,mappings_file):
       contig_maps[contig_id] = GenomicMap(contig_interval,reference_interval)	
   f_maps.close()
   
+  #Infer events based on assembly...
   for contig, cont_maps in sorted(contig_maps.iteritems()):
     print contig+": "+str(sizes[contig])
-    for inter_a, inter_b in sorted(cont_maps.mappings.iteritems(), key=lambda x: x[0].begin):
-      print "\t"+str(inter_a.begin)+"-"+str(inter_a.end)+"->"+str(inter_b.begin)+"-"+str(inter_b.end)
+    sorted_mappings = sorted(cont_maps.mappings.iterkeys(), key=lambda x: x.begin)
+    for in range()
+    #for inter_a, inter_b in sorted(cont_maps.mappings.iteritems(), key=lambda x: x[0].begin):
+    #  print "\t"+str(inter_a.begin)+"-"+str(inter_a.end)+"->"+str(inter_b.begin)+"-"+str(inter_b.end)
   return
 
 #Tests... the script will not continue if these fail
@@ -99,6 +106,6 @@ instructions = "e.g. python estimate_large_deletions.py contigs.fasta mappings.m
 
 if __name__=="__main__":
     if len(sys.argv) == 3:
-        estimate_large_indels(sys.argv[1],sys.argv[2])
+        estimate_genomic_events(sys.argv[1],sys.argv[2])
     else:
         print instructions

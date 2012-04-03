@@ -66,7 +66,7 @@ def estimate_snps_indels(reference,filename,min_cov,percent):
                     else: note = "deletion\t" + str(len) + "bp"
                     break
                 
-            print '%s\t%s\t%s' % (pileupcolumn.pos + 2, note) #0-based + 1
+            print '%s\t%s' % (pileupcolumn.pos + 2, note) #0-based + 1
       
     samfile.close()
     return
