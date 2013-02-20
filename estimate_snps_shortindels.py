@@ -48,7 +48,11 @@ def estimate_snps_indels(reference,filename,outfile,min_cov,min_qual_base,min_qu
             #Ignore reads with low mapping quality
             #print "Map Qual "+str(pileupread.alignment.mapq)
             if(pileupread.alignment.mapq < min_qual_map): continue
-            
+	    
+	    # extra_conditions
+	    if not pileupread.alignment.is_paired: continue	    	    
+	    if(pileupread.alignment.mate_is_unmapped): continue
+	  
             #Ignore positions of the reads with low quality
             read_qual = ord(pileupread.alignment.qual[pileupread.qpos])-phred_add
             #print "Read Qual "+str(read_qual)

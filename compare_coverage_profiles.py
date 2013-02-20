@@ -61,6 +61,6 @@ instructions = "e.g. python estimate_large_deletions.py window_coverage_ref.cov 
 
 if __name__=="__main__":
     if len(sys.argv) == 4:
-        estimate_events(sys.argv[1],sys.argv[2],sys.argv[3],0.7)
+        estimate_events(sys.argv[1],sys.argv[2],sys.argv[3],0.5)
     else:
         print instructions

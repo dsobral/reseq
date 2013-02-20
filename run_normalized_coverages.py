@@ -45,6 +45,7 @@ def run_normalized_coverages(reference_file,bam_file,outfile,window,group_min,gr
       gc_counts[gc] = gc_counts[gc]+1
       
       cov=0
+      #this does not work with split alignments
       for read in samfile.fetch(refid, n, n+window):
 	cov = cov + 1
       gc_coverages[gc] = gc_coverages[gc]+cov
@@ -54,11 +55,13 @@ def run_normalized_coverages(reference_file,bam_file,outfile,window,group_min,gr
     #Normalize by counts  
     for n in range(group_min, group_max+1):
       gc_coverages[n] = float(gc_coverages[n]) / float(gc_counts[n])
+      #output.write(str(n)+"\t"+str(gc_coverages[n])+"\n")
       
+    
     for n in range(0, reflen, window):
-      #print str(n)+"\t"+str(float(coverages[n])/float(gc_coverages[gcs[n]]))
+      ##print str(n)+"\t"+str(float(coverages[n])/float(gc_coverages[gcs[n]]))
       output.write(str(n)+"\t"+str(float(coverages[n])/float(gc_coverages[gcs[n]]))+"\n")
-      #print str(n)+"\t"+str(coverages[n])
+      ##print str(n)+"\t"+str(coverages[n])
       
     #Carefull: cannot do this with eukaryotic/larger genome (or genome with more than one chromosome/contig)
     # e.g. 'gi|238899406|ref|NC_012759.1|'
